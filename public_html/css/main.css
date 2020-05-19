@@ -1,0 +1,38 @@
+body{
+	box-sizing: border-box;
+	background: #eee;
+}
+.title{
+	font-size: 30px;
+    margin: 20px 0;
+    font-weight: 600;
+}
+ul{
+	width: 500px;
+}
+li{
+	height: 50px;
+	border-bottom: 1px solid #bbb;
+}
+#todo-list input[type="checkbox"]{
+	cursor: pointer;
+}
+.content{
+	flex: 1 0;
+}
+.btn{
+	padding: 5px 15px;
+	font-weight: 600;
+}
+.btn:focus{
+	box-shadow:none;
+}
+li.complete .content{
+	text-decoration: line-through;
+}
+li:hover{
+	background-color: #f8f8f8;
+}
+li.new:hover{
+	background-color: #eee;
+}

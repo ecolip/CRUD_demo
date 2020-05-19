@@ -34,6 +34,7 @@ $(document).ready(function(){
 		todoTemplateUI= todoTemplateUI+html;
 	});
 	$('.new').before(todoTemplateUI);
+	$('.complete').find('input').prop('checked', true);
 	
 	//Create
 	$('#todo-list').on('blur', '.content', function (e){
@@ -51,7 +52,6 @@ $(document).ready(function(){
 
 					$(e.currentTarget).closest('li').before(li);
 				}, 'json');
-				
 			}
 			$(e.currentTarget).empty();
 		}
@@ -93,7 +93,6 @@ $(document).ready(function(){
 		$.post('todo/complete.php', {id: id}, function (data,textStatus, xhr){
 			li.toggleClass('complete');
 		}, 'json');
-		
 	});
 
 	//sort

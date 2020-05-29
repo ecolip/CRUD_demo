@@ -1,5 +1,5 @@
-<?php include('header.php') ?>
-<?php include('data.php') ?>
+<?php include('header.php')?>
+<?php include('data.php')?>
 
 <div class="title text-center">CRUD Demo</div>
 <ul id="todo-list" class="list-unstyled mb-0 mx-auto">
@@ -32,4 +32,4 @@
 	</li>
 </script>
 
-<?php include('footer.php') ?>
+<?php include('footer.php')?>

@@ -10,12 +10,11 @@ try{
 	exit;
 }
 
-$orderPairs = $_POST['orderPair']; //$orderPairs =[{}, {}, {}]
-// echo json_encode($orderPairs);
+$orderPairs = $_POST['orderPair']; //$orderPairs =[{id:id, order:order}, {}, {}]
+$sql = 'UPDATE todos SET `order`=:order WHERE `id`=:id';
+$statement = $pdo->prepare($sql);
 foreach ($orderPairs as $key=>$orderPair){
 	// echo var_dump($orderPair);
-	$sql = 'UPDATE todos SET `order`=:order WHERE `id`=:id';
-	$statement = $pdo->prepare($sql);
 	$statement->bindValue(':id', $orderPair['id'], PDO::PARAM_INT);
 	$statement->bindValue(':order', $orderPair['order'], PDO::PARAM_INT);
 	$result = $statement->execute();

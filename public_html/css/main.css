@@ -20,6 +20,9 @@ li{
 .content{
 	flex: 1 0;
 }
+.content:focus{
+	outline: none;
+}
 .btn{
 	padding: 5px 15px;
 	font-weight: 600;

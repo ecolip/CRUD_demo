@@ -1,41 +1,32 @@
 $(document).ready(function(){
 	var source = $("#todo-list-template").html();
 	var template = Handlebars.compile(source);
-	
-	//定位div(contenteditable = "true")
-	//方法一:
-	// function set_pos_last(obj) {
-	// 	var range = window.getSelection();//創建range
-	// 	range.selectAllChildren(obj);//range 選擇obj下所有子內容
-	// 	range.collapseToEnd();//光標移至最后
-	// }
-	//方法二:
-	function po_Last_Div(obj) {
-		if (window.getSelection) {//ie11 10 9 ff safari
-			obj.focus(); //解决ff不獲取焦點無法定位问题
-			var range = window.getSelection();//創建range
-			range.selectAllChildren(obj);//range 選擇obj下所有子内容
-			range.collapseToEnd();//光標移至最后
-		}
-		else if (document.selection) {//ie10 9 8 7 6 5
-			var range = document.selection.createRange();//創建選擇对象
-			//var range = document.body.createTextRange();
-			range.moveToElementText(obj);//range定位到obj
-			range.collapse(false);//光標移至最后
-			range.select();
-		}
-	}
 
+	
+	
 	//Read, prepare all todo list items
 	var todoTemplateUI = '';
 	$.each($todos, function(index, content){
 		html= template(content);
-		// console.log(typeof html);
 		todoTemplateUI= todoTemplateUI+html;
 	});
-	$('.new').before(todoTemplateUI);
+	$('li.new').before(todoTemplateUI);
 	$('.complete').find('input').prop('checked', true);
-	
+
+	//way 2
+	// var todoTemplateUI='';
+	// $.post('data.php', {}, function (data,textStatus, xhr){
+	// 	// console.log('1');
+	// 	$.each(data, function (index, object){
+	// 		html = template(object);
+	// 		todoTemplateUI = todoTemplateUI+html;
+	// 	});
+	// 	// console.log('2');
+	// 	$('li.new').before(todoTemplateUI);
+	// }, 'json');
+	// // console.log('3');
+	// $('.complete').find('input').prop('checked', true);
+
 	//Create
 	$('#todo-list').on('blur', '.content', function (e){
 		var isNew = $(e.currentTarget).closest('li').is('.new');
@@ -64,11 +55,15 @@ $(document).ready(function(){
 		}
 	});
 	
-
+	function set_cursor_last(obj) {
+		let item = window.getSelection();
+		item.selectAllChildren(obj);
+		item.collapseToEnd();
+	}
 	//Update enter editor mode
 	$('#todo-list').on('dblclick', '.content', function (e){
 		$(this).prop('contenteditable', 'true').focus();
-		po_Last_Div(this);
+		set_cursor_last(this);
 	});
 
 	//Delete
@@ -102,7 +97,6 @@ $(document).ready(function(){
 		stop: function (){
 			//get each id and give new order to php 
 			orderPair =[];
-
 			$('#todo-list').find('li:not(.new)').each(function (index, li){
 				var id =$(li).data('id');
 				var order = index+1;
@@ -117,5 +111,4 @@ $(document).ready(function(){
 			$.post('todo/sort.php', {orderPair: orderPair});
 		}
 	});
-	
 });
